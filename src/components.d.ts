@@ -6,6 +6,10 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
+    interface CrDropdown {
+        "optionslist": string;
+        "title": string;
+    }
     interface MyComponent {
         /**
           * The first name
@@ -22,6 +26,12 @@ export namespace Components {
     }
 }
 declare global {
+    interface HTMLCrDropdownElement extends Components.CrDropdown, HTMLStencilElement {
+    }
+    var HTMLCrDropdownElement: {
+        prototype: HTMLCrDropdownElement;
+        new (): HTMLCrDropdownElement;
+    };
     interface HTMLMyComponentElement extends Components.MyComponent, HTMLStencilElement {
     }
     var HTMLMyComponentElement: {
@@ -29,10 +39,16 @@ declare global {
         new (): HTMLMyComponentElement;
     };
     interface HTMLElementTagNameMap {
+        "cr-dropdown": HTMLCrDropdownElement;
         "my-component": HTMLMyComponentElement;
     }
 }
 declare namespace LocalJSX {
+    interface CrDropdown {
+        "onElementSelected"?: (event: CustomEvent<number>) => void;
+        "optionslist"?: string;
+        "title"?: string;
+    }
     interface MyComponent {
         /**
           * The first name
@@ -48,6 +64,7 @@ declare namespace LocalJSX {
         "middle"?: string;
     }
     interface IntrinsicElements {
+        "cr-dropdown": CrDropdown;
         "my-component": MyComponent;
     }
 }
@@ -55,6 +72,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "cr-dropdown": LocalJSX.CrDropdown & JSXBase.HTMLAttributes<HTMLCrDropdownElement>;
             "my-component": LocalJSX.MyComponent & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
         }
     }
